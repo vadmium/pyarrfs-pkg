@@ -1,21 +1,22 @@
 _proj=pyarrfs
 pkgname="$_proj"
-_commit=30dcc9d
-pkgver="0.7.2+g$_commit"
-_acc=plajjan
+pkgver="0.7.2"
 pkgrel=1
 pkgdesc="File system that represents Rar files as directories"
 arch=(any)
 license=(MIT)
 url="http://labs.spritelink.net/$_proj"
-depends=(python2 python-fuse python2-rarfile)
-makedepends=(python2 python-fuse python2-rarfile)
+depends=(python2 python-fuse "python2-rarfile>=2.3")
+makedepends=(python2 python-fuse "python2-rarfile>=2.3")
 
-source=("https://github.com/$_acc/$_proj/tarball/$_commit")
-md5sums=(b3d59cb11efcff81be4582ab9187064f)
+#_pypi_source
+_rls="$_proj-$pkgver"
+source+=(
+"https://pypi.python.org/packages/source/${_proj:0:1}/$_proj/$_rls.tar.gz")
+md5sums+=(3705a9831a3c0061ac8a5a805ab3359e)
 
 package() {
-    cd "$srcdir/$_acc-$_proj-$_commit"
+    cd "$srcdir/$_rls"
     python2 setup.py install --root="$pkgdir" --optimize=1
     install -D -m644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
 }
